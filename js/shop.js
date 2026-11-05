@@ -108,7 +108,6 @@
             refresh();
         });
 
-        // ===== ОБРАБОТЧИК КНОПКИ ЗАКАЗА С НАСТРОЕННЫМ VERCEL URL =====
         const checkoutBtn = root.querySelector('[data-shop-checkout]');
         if (checkoutBtn) {
             checkoutBtn.addEventListener('click', () => {
@@ -117,7 +116,6 @@
                 if (!photo) return;
                 const calc = window.TerraPricing.calc(photo, order.sizeId, order.paperId, order.frameId);
 
-                // Формируем данные заказа для базы Vercel KV -> 1С
                 const orderData = {
                     title: photo.title,
                     size: window.TerraPricing.getSize(order.sizeId).label,
@@ -128,13 +126,11 @@
                     phone: "+7 (999) 000-00-00" 
                 };
 
-                // Эффект загрузки
                 const originalText = checkoutBtn.textContent;
                 checkoutBtn.textContent = 'Отправка...';
                 checkoutBtn.disabled = true;
 
-                // Ваш точный рабочий адрес бэкенда Vercel
-                const vercelUrl = 'https://terrasoul.vercel.app/api/order'; 
+                const vercelUrl = 'https://vercel.app'; 
 
                 fetch(vercelUrl, {
                     method: 'POST',
