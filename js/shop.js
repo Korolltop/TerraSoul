@@ -144,7 +144,7 @@
                 .then(res => res.json())
                 .then(data => {
                     if (data.success) {
-                        alert(`Заказ успешно оформлен и передан в 1С!\n\nИтого: ${window.TerraPricing.format(calc.total)}`);
+                        alert(`Заказ успешно оформлен!\n\nИтого: ${window.TerraPricing.format(calc.total)}`);
                         window.TerraCart.clear(); 
                     } else {
                         alert(`Ошибка сервера Vercel: ${data.error}`);
@@ -193,6 +193,6 @@
             if (root && root !== currentRoot) {
                 bind(app.querySelector('.page'));
             }
-        }).observe(app, { childList: true, subtree: false });
+        }).observe(app, { childList: true, subtree: true });
     });
 })();
