@@ -1,5 +1,6 @@
 {
-  dependencies {
-    @vercelkv ^1.0.1
+  "type": "module",
+  "dependencies": {
+    "@vercel/kv": "^1.0.1"
   }
 }
