@@ -4,8 +4,8 @@
 window.TERRA_PHOTOS = [
     {
         id: '9',
-        file: 'IMG_9.jpg',         
-        original: 'IMG_9.jpg',        
+        file: 'IMG_9.JPG',         
+        original: 'IMG_9.JPG',        
         title: 'Осенний берег',
         size: '60×90 см',
         price: 12900,
@@ -14,8 +14,8 @@ window.TERRA_PHOTOS = [
     },
     {
         id: '8',
-        file: 'IMG_8.jpg',
-        original: 'IMG_8.jpg',
+        file: 'IMG_8.JPG',
+        original: 'IMG_8.JPG',
         title: 'Огненное солнце',
         size: '50×70 см',
         price: 9800,
@@ -24,8 +24,8 @@ window.TERRA_PHOTOS = [
     },
     {
         id: '2',
-        file: 'IMG_2.jpg',
-        original: 'IMG_2.jpg',
+        file: 'IMG_2.JPG',
+        original: 'IMG_2.JPG',
         title: 'Лесные скалы',
         size: '40×60 см',
         price: 7500,
@@ -34,8 +34,8 @@ window.TERRA_PHOTOS = [
     },
     {
         id: '4',
-        file: 'IMG_4.jpg',
-        original: 'IMG_4.jpg',
+        file: 'IMG_4.JPG',
+        original: 'IMG_4.JPG',
         title: 'Закат над Тургояком',
         size: '60×90 см',
         price: 14900,
@@ -44,8 +44,8 @@ window.TERRA_PHOTOS = [
     },
     {
         id: '11',
-        file: 'IMG_11.jpg',
-        original: 'IMG_11.jpg',
+        file: 'IMG_11.JPG',
+        original: 'IMG_11.JPG',
         title: 'Краски осени',
         size: '50×70 см',
         price: 11500,
@@ -54,8 +54,8 @@ window.TERRA_PHOTOS = [
     },
     {
         id: '1',
-        file: 'IMG_1.jpg',
-        original: 'IMG_1.jpg',
+        file: 'IMG_1.JPG',
+        original: 'IMG_1.JPG',
         title: 'Лунный месяц',
         size: '40×60 см',
         price: 8200,
@@ -64,8 +64,8 @@ window.TERRA_PHOTOS = [
     },
     {
         id: '16',
-        file: 'IMG_16.jpg',
-        original: 'IMG_16.jpg',
+        file: 'IMG_16.JPG',
+        original: 'IMG_16.JPG',
         title: 'Композиция "Осенний Райдер"',
         size: '60×80 см',
         price: 10400,
@@ -74,8 +74,8 @@ window.TERRA_PHOTOS = [
     },
     {
         id: '5',
-        file: 'IMG_5.jpg',
-        original: 'IMG_5.jpg',
+        file: 'IMG_5.JPG',
+        original: 'IMG_5.JPG',
         title: 'Огненный закат',
         size: '70×100 см',
         price: 16000,
@@ -84,8 +84,8 @@ window.TERRA_PHOTOS = [
     },
     {
         id: '6',
-        file: 'IMG_6.jpg',
-        original: 'IMG_6.jpg',
+        file: 'IMG_6.JPG',
+        original: 'IMG_6.JPG',
         title: 'Яхтенный рай',
         size: '50×70 см',
         price: 12000,
