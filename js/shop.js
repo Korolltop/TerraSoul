@@ -62,22 +62,20 @@
         if (!empty || !shop) return;
 
         if (!photo) {
-            // Заказа нет
             shop.hidden = true;
             empty.hidden = false;
             
             if (animateEmpty) {
                 empty.classList.remove('is-appearing');
-                void empty.offsetWidth; // сброс анимации
+                void empty.offsetWidth; 
                 empty.classList.add('is-appearing');
             }
             return;
         }
 
-        // Заказ есть
         empty.hidden = true;
         shop.hidden = false;
-        shop.classList.remove('is-leaving'); // на всякий случай
+        shop.classList.remove('is-leaving'); 
 
         const img = shop.querySelector('.shop__photo');
         img.src = `images/thumbs/${photo.file}`;
@@ -117,7 +115,45 @@
                 const photo = window.TerraPricing.getPhoto(order.photoId);
                 if (!photo) return;
                 const calc = window.TerraPricing.calc(photo, order.sizeId, order.paperId, order.frameId);
-                alert(`Заказ оформлен!\n\n«${photo.title}»\n${window.TerraPricing.getSize(order.sizeId).label}, ${window.TerraPricing.getPaper(order.paperId).label}, ${window.TerraPricing.getFrame(order.frameId).label}\nИтого: ${window.TerraPricing.format(calc.total)}`);
+
+                const orderData = {
+                    title: photo.title,
+                    size: window.TerraPricing.getSize(order.sizeId).label,
+                    paper: window.TerraPricing.getPaper(order.paperId).label,
+                    frame: window.TerraPricing.getFrame(order.frameId).label,
+                    total: calc.total,
+                    name: "Покупатель с сайта", 
+                    phone: "+7 (999) 000-00-00" 
+                };
+
+                const originalText = checkoutBtn.textContent;
+                checkoutBtn.textContent = 'Отправка...';
+                checkoutBtn.disabled = true;
+
+                const vercelUrl = 'https://terrasoul.vercel.app/api/order'; 
+
+                fetch(vercelUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(orderData)
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        alert(`Заказ успешно оформлен!\n\nИтого: ${window.TerraPricing.format(calc.total)}`);
+                        window.TerraCart.clear(); 
+                    } else {
+                        alert(`Ошибка сервера Vercel: ${data.error}`);
+                    }
+                })
+                .catch(err => {
+                    console.error('Ошибка:', err);
+                    alert('Ошибка соединения: не удалось достучаться до сервера Vercel.');
+                })
+                .finally(() => {
+                    checkoutBtn.textContent = originalText;
+                    checkoutBtn.disabled = false;
+                });
             });
         }
 
@@ -127,25 +163,18 @@
                 const shop = root.querySelector('[data-shop]');
                 if (!shop || shop.hidden) return;
 
-                // 1. Анимация ухода
+                shop.classList.remove('is-leaving');
+                void shop.offsetWidth; 
                 shop.classList.add('is-leaving');
-                shop.style.pointerEvents = 'none';
 
                 setTimeout(() => {
-                    // 2. Очистка
                     window.TerraCart.clear();
-                    
-                    // 3. Обновление DOM с анимацией пустоты
                     refresh(true);
-                    
-                    // 4. Сброс стилей
                     shop.classList.remove('is-leaving');
-                    shop.style.pointerEvents = '';
-                }, 400);
+                }, 500); 
             });
         }
 
-        // Первичная отрисовка
         refresh();
     };
 
@@ -155,13 +184,11 @@
         const app = document.getElementById('app');
         if (!app) return;
         
-        // Следим за переключением страниц
         new MutationObserver(() => {
             const root = app.querySelector('[data-shop], [data-shop-empty]');
             if (root && root !== currentRoot) {
-                // Перепривязываемся к новому DOM
                 bind(app.querySelector('.page'));
             }
-        }).observe(app, { childList: true, subtree: false });
+        }).observe(app, { childList: true, subtree: true });
     });
 })();
