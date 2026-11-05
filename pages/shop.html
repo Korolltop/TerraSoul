@@ -1,0 +1,75 @@
+<section class="page">
+    <h1 class="section__title">Магазин</h1>
+
+    <!-- Пустая корзина -->
+    <div class="shop-empty" data-shop-empty hidden>
+        <div class="shop-empty__inner">
+            <div class="shop-empty__icon">◆</div>
+            <h2>Пока пусто</h2>
+            <p>Откройте любое фото в галерее и нажмите «Заказать» — оно появится здесь.</p>
+            <button class="btn btn--primary" data-goto="gallery" type="button">Перейти в галерею</button>
+        </div>
+    </div>
+
+    <!-- Оформление заказа -->
+    <div class="shop" data-shop hidden>
+        <div class="shop__preview">
+            <div class="shop__photo-wrap">
+                <img class="shop__photo" alt="">
+            </div>
+            <div class="shop__photo-info">
+                <h2 class="shop__photo-title"></h2>
+                <p class="shop__photo-meta"></p>
+            </div>
+        </div>
+
+        <form class="shop__form" onsubmit="return false;">
+            <fieldset class="shop-fieldset">
+                <legend class="shop-fieldset__legend">Размер</legend>
+                <div class="shop-options" data-options="size"></div>
+            </fieldset>
+
+            <fieldset class="shop-fieldset">
+                <legend class="shop-fieldset__legend">Тип бумаги</legend>
+                <div class="shop-options" data-options="paper"></div>
+            </fieldset>
+
+            <fieldset class="shop-fieldset">
+                <legend class="shop-fieldset__legend">Рамка</legend>
+                <div class="shop-options" data-options="frame"></div>
+            </fieldset>
+
+            <div class="shop-summary">
+                <div class="shop-summary__row">
+                    <span>Фотография (<span data-summary-size>40×60</span>)</span>
+                    <span data-summary-size-price>—</span>
+                </div>
+                <div class="shop-summary__row">
+                    <span>Бумага: <span data-summary-paper>Матовая</span></span>
+                    <span data-summary-paper-price>—</span>
+                </div>
+                <div class="shop-summary__row">
+                    <span>Рамка: <span data-summary-frame>Без рамки</span></span>
+                    <span data-summary-frame-price>—</span>
+                </div>
+                <div class="shop-summary__row shop-summary__row--muted">
+                    <span>Доставка</span>
+                    <span data-summary-delivery>—</span>
+                </div>
+                <div class="shop-summary__row shop-summary__row--total">
+                    <span>Итого</span>
+                    <span data-summary-total>—</span>
+                </div>
+            </div>
+
+            <div class="shop__actions">
+                <button class="btn btn--primary" type="button" data-shop-checkout>
+                    Оформить заказ
+                </button>
+                <button class="btn btn--ghost" type="button" data-shop-clear>
+                    Убрать из заказа
+                </button>
+            </div>
+        </form>
+    </div>
+</section>

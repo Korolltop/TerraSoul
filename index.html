@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TerraSoul — Фотографии природы</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animations.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container header__inner">
+            <a href="#home" class="logo" data-nav="home">
+                <span class="logo__mark">◆</span>
+                <span class="logo__text">TerraSoul</span>
+            </a>
+
+            <nav class="nav">
+ 		<span class="nav__indicator"></span>
+                <button class="nav__link is-active" data-nav="home">Главная</button>
+                <button class="nav__link" data-nav="gallery">Галерея</button>
+    		<button class="nav__link" data-nav="shop">Магазин</button>
+                <button class="nav__link" data-nav="about">О нас</button>
+                <button class="nav__link" data-nav="contact">Контакты</button>
+            </nav>
+
+            <button class="theme-toggle" id="themeToggle" aria-label="Переключить тему">
+                <span class="theme-toggle__icon theme-toggle__icon--sun">☀</span>
+                <span class="theme-toggle__icon theme-toggle__icon--moon">☾</span>
+            </button>
+        </div>
+    </header>
+
+    <main class="main container" id="app">
+        <!-- Сюда подгружаются страницы -->
+    </main>
+
+    <footer class="footer">
+        <div class="container footer__inner">
+            <span>© 2026 TerraSoul</span>
+            <span>Фотографии, снятые с душой</span>
+        </div>
+    </footer>
+	<script src="js/theme.js"></script>
+	<script src="js/photos.js"></script>
+	<script src="js/cart.js"></script>
+	<script src="js/shop.js"></script>
+	<script src="js/navigation.js"></script>
+	<script src="js/nav-slider.js"></script>
+	<script src="js/scroll-reveal.js"></script>
+	<script src="js/lightbox.js"></script>
+</body>
+</html>
