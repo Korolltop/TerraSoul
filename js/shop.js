@@ -62,22 +62,20 @@
         if (!empty || !shop) return;
 
         if (!photo) {
-            // Заказа нет
             shop.hidden = true;
             empty.hidden = false;
             
             if (animateEmpty) {
                 empty.classList.remove('is-appearing');
-                void empty.offsetWidth; // сброс анимации
+                void empty.offsetWidth; 
                 empty.classList.add('is-appearing');
             }
             return;
         }
 
-        // Заказ есть
         empty.hidden = true;
         shop.hidden = false;
-        shop.classList.remove('is-leaving'); // на всякий случай
+        shop.classList.remove('is-leaving'); 
 
         const img = shop.querySelector('.shop__photo');
         img.src = `images/thumbs/${photo.file}`;
@@ -110,7 +108,8 @@
             refresh();
         });
 
-                const checkoutBtn = root.querySelector('[data-shop-checkout]');
+        // ===== ОБРАБОТЧИК КНОПКИ ЗАКАЗА С НАСТРОЕННЫМ VERCEL URL =====
+        const checkoutBtn = root.querySelector('[data-shop-checkout]');
         if (checkoutBtn) {
             checkoutBtn.addEventListener('click', () => {
                 const order = window.TerraCart.get();
@@ -118,24 +117,24 @@
                 if (!photo) return;
                 const calc = window.TerraPricing.calc(photo, order.sizeId, order.paperId, order.frameId);
 
-                // Собираем данные для отправки на Vercel -> 1С
+                // Формируем данные заказа для базы Vercel KV -> 1С
                 const orderData = {
                     title: photo.title,
                     size: window.TerraPricing.getSize(order.sizeId).label,
                     paper: window.TerraPricing.getPaper(order.paperId).label,
                     frame: window.TerraPricing.getFrame(order.frameId).label,
                     total: calc.total,
-                    name: "Покупатель с сайта", // Если сделаете инпуты, берите данные оттуда
+                    name: "Покупатель с сайта", 
                     phone: "+7 (999) 000-00-00" 
                 };
 
-                // Визуальный фидбек для пользователя
+                // Эффект загрузки
                 const originalText = checkoutBtn.textContent;
                 checkoutBtn.textContent = 'Отправка...';
                 checkoutBtn.disabled = true;
 
-                // ВСТАВЛЯЕМ ВАШ АДРЕС СЮДА (обязательно добавляем /api/order в конец)
-                const vercelUrl = 'https://vercel.app'; 
+                // Ваш точный рабочий адрес бэкенда Vercel
+                const vercelUrl = 'https://terrasoul.vercel.app/'; 
 
                 fetch(vercelUrl, {
                     method: 'POST',
@@ -146,24 +145,21 @@
                 .then(data => {
                     if (data.success) {
                         alert(`Заказ успешно оформлен и передан в 1С!\n\nИтого: ${window.TerraPricing.format(calc.total)}`);
-                        window.TerraCart.clear(); // Очищаем корзину
+                        window.TerraCart.clear(); 
                     } else {
-                        alert(`Ошибка при оформлении заказа: ${data.error}`);
+                        alert(`Ошибка сервера Vercel: ${data.error}`);
                     }
                 })
                 .catch(err => {
                     console.error('Ошибка:', err);
-                    alert('Не удалось связаться с сервером. Попробуйте позже.');
+                    alert('Ошибка соединения: не удалось достучаться до сервера Vercel.');
                 })
                 .finally(() => {
-                    // Возвращаем кнопку в рабочее состояние
                     checkoutBtn.textContent = originalText;
                     checkoutBtn.disabled = false;
                 });
             });
         }
-
-
 
         const clearBtn = root.querySelector('[data-shop-clear]');
         if (clearBtn) {
@@ -171,31 +167,18 @@
                 const shop = root.querySelector('[data-shop]');
                 if (!shop || shop.hidden) return;
 
-                // 1. Сбрасываем возможные старые классы
                 shop.classList.remove('is-leaving');
-                
-                // 2. Трюк для принудительной перерисовки (reflow)
-                // Это заставит браузер "заметить" начальное состояние перед анимацией
                 void shop.offsetWidth; 
-                
-                // 3. Запускаем анимацию
                 shop.classList.add('is-leaving');
 
-                // 4. Ждем окончания анимации (500мс)
                 setTimeout(() => {
-                    // Очищаем корзину (это вызовет событие order-changed и refresh())
                     window.TerraCart.clear();
-                    
-                    // Принудительно обновляем DOM с анимацией пустоты
                     refresh(true);
-                    
-                    // Убираем класс с магазина (он уже скрыт)
                     shop.classList.remove('is-leaving');
-                }, 500); // 500мс = 0.5s в CSS
+                }, 500); 
             });
         }
 
-        // Первичная отрисовка
         refresh();
     };
 
@@ -205,11 +188,9 @@
         const app = document.getElementById('app');
         if (!app) return;
         
-        // Следим за переключением страниц
         new MutationObserver(() => {
             const root = app.querySelector('[data-shop], [data-shop-empty]');
             if (root && root !== currentRoot) {
-                // Перепривязываемся к новому DOM
                 bind(app.querySelector('.page'));
             }
         }).observe(app, { childList: true, subtree: false });
