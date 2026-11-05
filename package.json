@@ -1,0 +1,5 @@
+{
+  dependencies {
+    @vercelkv ^1.0.1
+  }
+}
