@@ -110,16 +110,60 @@
             refresh();
         });
 
-        const checkoutBtn = root.querySelector('[data-shop-checkout]');
+                const checkoutBtn = root.querySelector('[data-shop-checkout]');
         if (checkoutBtn) {
             checkoutBtn.addEventListener('click', () => {
                 const order = window.TerraCart.get();
                 const photo = window.TerraPricing.getPhoto(order.photoId);
                 if (!photo) return;
                 const calc = window.TerraPricing.calc(photo, order.sizeId, order.paperId, order.frameId);
-                alert(`Заказ оформлен!\n\n«${photo.title}»\n${window.TerraPricing.getSize(order.sizeId).label}, ${window.TerraPricing.getPaper(order.paperId).label}, ${window.TerraPricing.getFrame(order.frameId).label}\nИтого: ${window.TerraPricing.format(calc.total)}`);
+
+                // Собираем данные для отправки на Vercel -> 1С
+                const orderData = {
+                    title: photo.title,
+                    size: window.TerraPricing.getSize(order.sizeId).label,
+                    paper: window.TerraPricing.getPaper(order.paperId).label,
+                    frame: window.TerraPricing.getFrame(order.frameId).label,
+                    total: calc.total,
+                    name: "Покупатель с сайта", // Если сделаете инпуты, берите данные оттуда
+                    phone: "+7 (999) 000-00-00" 
+                };
+
+                // Визуальный фидбек для пользователя
+                const originalText = checkoutBtn.textContent;
+                checkoutBtn.textContent = 'Отправка...';
+                checkoutBtn.disabled = true;
+
+                // ВСТАВЛЯЕМ ВАШ АДРЕС СЮДА (обязательно добавляем /api/order в конец)
+                const vercelUrl = 'https://vercel.app'; 
+
+                fetch(vercelUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(orderData)
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        alert(`Заказ успешно оформлен и передан в 1С!\n\nИтого: ${window.TerraPricing.format(calc.total)}`);
+                        window.TerraCart.clear(); // Очищаем корзину
+                    } else {
+                        alert(`Ошибка при оформлении заказа: ${data.error}`);
+                    }
+                })
+                .catch(err => {
+                    console.error('Ошибка:', err);
+                    alert('Не удалось связаться с сервером. Попробуйте позже.');
+                })
+                .finally(() => {
+                    // Возвращаем кнопку в рабочее состояние
+                    checkoutBtn.textContent = originalText;
+                    checkoutBtn.disabled = false;
+                });
             });
         }
+
+
 
         const clearBtn = root.querySelector('[data-shop-clear]');
         if (clearBtn) {
