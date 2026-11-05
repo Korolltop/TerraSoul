@@ -134,7 +134,7 @@
                 checkoutBtn.disabled = true;
 
                 // Ваш точный рабочий адрес бэкенда Vercel
-                const vercelUrl = 'https://terrasoul.vercel.app/'; 
+                const vercelUrl = 'https://terrasoul.vercel.app/api/order'; 
 
                 fetch(vercelUrl, {
                     method: 'POST',
